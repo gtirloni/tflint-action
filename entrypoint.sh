@@ -106,7 +106,7 @@ function main() {
   declare GITHUB_EVENT_NAME GITHUB_EVENT_PATH GITHUB_TOKEN
 
   local terraform_location="${INPUT_TFLINT_ACTION_FOLDER:-$GITHUB_WORKSPACE}"
-  local tflint_opts="${INPUT_TFLINT_ACTION__OPTS:-}"
+  local tflint_opts="${INPUT_TFLINT_ACTION_OPTS:-}"
   local tflint_action_comment="${INPUT_TFLINT_ACTION_COMMENT:-0}"
 
   local github_event_type="${GITHUB_EVENT_NAME}"
@@ -129,7 +129,7 @@ function main() {
     pull_request=$(is_pull_request "${github_event_type}")
 
     ## We should only send a comment if we have comments enabled, it's a pull-request and we have a github token
-    if [ "$pull_request" -eq 1 ]; then
+    if [ "$pull_request" == "1" ]; then
 
       if [ -n "$github_token" ]; then
 
@@ -153,7 +153,7 @@ function main() {
 
       fi
     else
-      echo "::debug::The event name was ${GITHUB_EVENT}"
+      echo "::debug::The event name was ${GITHUB_EVENT_NAME}"
 
     fi
 
